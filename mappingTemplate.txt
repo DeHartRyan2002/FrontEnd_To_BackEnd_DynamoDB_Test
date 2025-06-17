@@ -1,0 +1,37 @@
+{
+    "body": "$util.escapeJavaScript($input.body)",
+    "headers": {
+        #foreach($header in $input.params().header.keySet())
+        "$header": "$util.escapeJavaScript($input.params().header.get($header))"
+        #if($foreach.hasNext),#end
+        #end
+    },
+    "queryStringParameters": {
+        #foreach($queryParam in $input.params().querystring.keySet())
+        "$queryParam": "$util.escapeJavaScript($input.params().querystring.get($queryParam))"
+        #if($foreach.hasNext),#end
+        #end
+    },
+    "pathParameters": {
+        #foreach($pathParam in $input.params().path.keySet())
+        "$pathParam": "$util.escapeJavaScript($input.params().path.get($pathParam))"
+        #if($foreach.hasNext),#end
+        #end
+    },
+    "stageVariables": {
+        #foreach($stageVariable in $stageVariables.keySet())
+        "$stageVariable": "$util.escapeJavaScript($stageVariables.get($stageVariable))"
+        #if($foreach.hasNext),#end
+        #end
+    },
+    "requestContext": {
+        "requestId": "$context.requestId",
+        "resourceId": "$context.resourceId",
+        "stage": "$context.stage",
+        "resourcePath": "$context.resourcePath",
+        "httpMethod": "$context.httpMethod",
+        "apiId": "$context.apiId",
+        "protocol": "$context.protocol",
+        "requestTime": "$context.requestTime"
+    }
+}

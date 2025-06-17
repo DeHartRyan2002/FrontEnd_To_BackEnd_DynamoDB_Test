@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Front End to DynamoDB Test</title>
+    <script>
+        async function sendRequest(event) {
+            event.preventDefault(); // Prevent form from submitting the traditional way
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+
+            const url = 'yourAPIURL/Prod/UserResponse';
+
+            const data = {
+                firstName: firstName,
+                lastName: lastName
+            };
+
+            try {
+                const response = await fetch('yourAPIURL/Prod/UserResponse', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                console.log(response);
+                const result = await response.json();
+                document.getElementById('result').innerText = JSON.stringify(result, null, 2);
+            } catch (error) {
+                document.getElementById('result').innerText = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Front End to DynamoDB Test</h1>
+    <form id="userForm" onsubmit="sendRequest(event)">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required><br><br>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required><br><br>
+        <button type="submit">Submit</button>
+    </form>
+    <h2>Response:</h2>
+    <pre id="result"></pre>
+</body>
+</html>
